@@ -259,7 +259,11 @@ export default function AdminDashboard() {
     try {
       // Fetch order items
       const response = await apiRequest("GET", `/api/orders/${order.id}`, null);
-      setOrderItems(response.items || []);
+      if (response && typeof response === 'object' && 'items' in response) {
+        setOrderItems(response.items || []);
+      } else {
+        setOrderItems([]);
+      }
       setOrderDetailsOpen(true);
     } catch (error) {
       toast({

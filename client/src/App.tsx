@@ -42,7 +42,7 @@ function App() {
   // Fetch user data if authenticated
   useEffect(() => {
     const fetchUserData = async () => {
-      if (authData?.authenticated && authData.userId) {
+      if (authData && typeof authData === 'object' && 'authenticated' in authData && authData.authenticated === true && 'userId' in authData) {
         try {
           // In a real implementation, you'd fetch user details here
           // For now we'll assume the user is authenticated without fetching details
@@ -64,13 +64,16 @@ function App() {
       return await apiRequest("POST", "/api/auth/login", credentials);
     },
     onSuccess: (data) => {
-      setUser(data.user);
-      setIsLoginModalOpen(false);
-      toast({
-        title: "Login successful",
-        description: `Welcome back, ${data.user.username}!`,
-      });
-      queryClient.invalidateQueries({ queryKey: ['/api/auth/check'] });
+      if (data && typeof data === 'object' && 'user' in data) {
+        const userData = data.user as { id: number; username: string; email: string; role: string };
+        setUser(userData);
+        setIsLoginModalOpen(false);
+        toast({
+          title: "Login successful",
+          description: `Welcome back, ${userData.username || 'User'}!`,
+        });
+        queryClient.invalidateQueries({ queryKey: ['/api/auth/check'] });
+      }
     },
     onError: (error: any) => {
       toast({
