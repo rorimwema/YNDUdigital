@@ -5,10 +5,12 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative h-screen flex items-center bg-cover bg-center"
+      className="relative h-screen flex items-center bg-cover bg-center mt-0"
       style={{
         backgroundImage:
           "url('https://yndufountain.co.ke/wp-content/uploads/2023/04/20221112_130917-scaled-1-2048x969.jpg')",
+        marginTop: "-80px",
+        paddingTop: "80px"
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>

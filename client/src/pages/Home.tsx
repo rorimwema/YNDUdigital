@@ -8,6 +8,7 @@ import Gallery from "@/components/Gallery";
 import SustainableVision from "@/components/SustainableVision";
 import HorticulturalInfo from "@/components/HorticulturalInfo";
 import Stats from "@/components/Stats";
+import FarmEvents from "@/components/FarmEvents";
 import Subscribe from "@/components/Subscribe";
 import Footer from "@/components/Footer";
 import Lightbox from "@/components/Lightbox";
@@ -40,6 +41,7 @@ export default function Home() {
         <SustainableVision />
         <HorticulturalInfo />
         <Stats />
+        <FarmEvents />
         <Subscribe />
       </main>
       

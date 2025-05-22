@@ -26,23 +26,23 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 bg-white bg-opacity-95 shadow-md z-50 transition-all duration-300 ${isScrolled ? "py-2 shadow-lg" : "py-3 shadow-md"}`}>
+    <header className={`fixed top-0 left-0 right-0 bg-white bg-opacity-95 z-50 transition-all duration-300 ${isScrolled ? "py-3 shadow-lg" : "py-4"}`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="text-primary font-heading font-bold text-base sm:text-xl">YNDU FOUNTAIN</div>
-            <span className="hidden sm:inline-block text-xs sm:text-sm font-medium text-neutral-500">|</span>
-            <div className="hidden sm:inline-block text-xs sm:text-sm font-medium text-neutral-500">Small Farms. Big Ideas.</div>
+          <div className="flex items-center space-x-3">
+            <div className="text-primary font-heading font-bold text-lg sm:text-2xl">YNDU FOUNTAIN</div>
+            <span className="hidden sm:inline-block text-sm font-medium text-neutral-500">|</span>
+            <div className="hidden sm:inline-block text-sm font-medium text-neutral-500">Small Farms. Big Ideas.</div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-4 lg:space-x-8">
-            <a href="#home" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Home</a>
-            <a href="#about" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">About</a>
-            <a href="#produce" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Our Produce</a>
-            <a href="#features" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Features</a>
-            <a href="#gallery" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Gallery</a>
-            <a href="#contact" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Contact</a>
+          <nav className="hidden md:flex space-x-5 lg:space-x-8">
+            <a href="#home" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Home</a>
+            <a href="#about" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">About</a>
+            <a href="#produce" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Our Produce</a>
+            <a href="#features" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Features</a>
+            <a href="#gallery" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Gallery</a>
+            <a href="#contact" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Contact</a>
           </nav>
 
           {/* Mobile Navigation Toggle */}
@@ -51,7 +51,7 @@ export default function Header() {
             onClick={toggleMobileMenu} 
             className="md:hidden text-neutral-700 focus:outline-none"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
