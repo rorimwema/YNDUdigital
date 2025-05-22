@@ -37,7 +37,8 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-5 lg:space-x-8">
-            <a href="#home" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Home</a>
+            <Link href="/" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Home</Link>
+            <Link href="/shop" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Shop</Link>
             <a href="#about" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">About</a>
             <a href="#produce" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Our Produce</a>
             <a href="#features" className="font-medium text-neutral-700 hover:text-primary transition-colors text-base">Features</a>
@@ -68,7 +69,8 @@ export default function Header() {
           >
             <div className="container mx-auto px-4 py-2">
               <nav className="flex flex-col space-y-3 py-3">
-                <a href="#home" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">Home</a>
+                <Link href="/" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">Home</Link>
+                <Link href="/shop" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">Shop</Link>
                 <a href="#about" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">About</a>
                 <a href="#produce" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">Our Produce</a>
                 <a href="#features" onClick={closeMobileMenu} className="font-medium text-neutral-700 hover:text-primary transition-colors py-2 border-b border-neutral-100">Features</a>

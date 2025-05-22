@@ -66,22 +66,41 @@ export default function Shop() {
     staleTime: 300000, // 5 minutes
   });
   
-  // Filtered products based on search and category
-  const filteredProducts = products.filter((product: Product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  /**
+   * Filters products based on search query and selected category
+   * 
+   * @returns Array of filtered products that match search and category criteria
+   */
+  const filteredProducts = Array.isArray(products) ? products.filter((product: Product) => {
+    // Check if product name or description matches search query
+    const matchesSearch = searchQuery === "" || 
+                          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    // Check if product belongs to selected category or if no category is selected
     const matchesCategory = selectedCategory === null || product.categoryId === selectedCategory;
+    
     return matchesSearch && matchesCategory;
-  });
+  }) : [];
   
-  // Calculate cart totals
+  /**
+   * Calculates the total price of all items in the cart
+   * 
+   * @returns {number} The calculated total in Kenyan Shillings
+   */
   const calculateTotal = () => {
     return cart.reduce((acc, item) => {
       return acc + (parseFloat(item.product.price) * item.quantity);
     }, 0);
   };
   
-  // Add to cart function
+  /**
+   * Adds a product to the shopping cart
+   * If the product is already in the cart, increases its quantity by 1
+   * Otherwise, adds the product as a new cart item with quantity 1
+   * 
+   * @param {Product} product - The product to add to the cart
+   */
   const addToCart = (product: Product) => {
     setCart(prevCart => {
       // Check if product already in cart
@@ -100,6 +119,7 @@ export default function Shop() {
       }
     });
     
+    // Show success notification
     toast({
       title: "Added to cart",
       description: `${product.name} added to your cart.`,
@@ -190,23 +210,23 @@ export default function Shop() {
       {/* Header */}
       <Header />
       
-      {/* Shop Header */}
-      <div className="bg-primary py-16 md:py-24 pt-28">
+      {/* Shop Header - Added top padding to fix overlap with fixed header */}
+      <div className="bg-primary py-16 md:py-24" style={{ paddingTop: "8rem" }}>
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
             Farm Shop
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto mb-4">
+          <p className="text-lg text-white max-w-2xl mx-auto mb-6">
             Shop our fresh, sustainable produce directly from our farm. 
             All items are grown using environmentally friendly practices.
             Payment on delivery.
           </p>
           
-          {/* Create Account Button */}
+          {/* Create Account Button - Improved positioning and styling */}
           <Button 
             onClick={() => setIsSignupModalOpen(true)}
             variant="secondary"
-            className="mt-2 flex items-center mx-auto"
+            className="mt-4 flex items-center mx-auto hover:bg-white/90 transition-colors"
           >
             <User size={18} className="mr-2" />
             Create Account
@@ -357,36 +377,77 @@ export default function Shop() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product: Product) => (
-                  <Card key={product.id} className="overflow-hidden">
-                    <div className="h-48 overflow-hidden">
+                  <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                    {/* Product Image with Hover Effect */}
+                    <div className="h-52 overflow-hidden relative">
                       {product.imageUrl ? (
                         <img 
                           src={product.imageUrl} 
                           alt={product.name}
-                          className="w-full h-full object-cover transition-transform hover:scale-105"
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="w-full h-full bg-neutral-200 flex items-center justify-center">
-                          <span className="text-neutral-400">No image</span>
+                        <div className="w-full h-full bg-neutral-100 flex items-center justify-center">
+                          <span className="text-neutral-400 font-medium">Product Image</span>
+                        </div>
+                      )}
+                      
+                      {/* Stock Badge */}
+                      {product.stock <= 0 && (
+                        <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                          Out of Stock
+                        </div>
+                      )}
+                      
+                      {/* Category Badge - Shows only if product has a category */}
+                      {product.categoryId && Array.isArray(categories) && (
+                        <div className="absolute bottom-2 left-2">
+                          {categories.map((category: any) => (
+                            category.id === product.categoryId && (
+                              <span key={category.id} className="bg-primary/80 text-white text-xs px-2 py-1 rounded-full">
+                                {category.name}
+                              </span>
+                            )
+                          ))}
                         </div>
                       )}
                     </div>
-                    <CardContent className="pt-4">
-                      <h3 className="font-heading font-semibold text-lg mb-2">{product.name}</h3>
-                      <p className="text-neutral-600 text-sm h-12 overflow-hidden">
+                    
+                    <CardContent className="pt-5">
+                      {/* Product Name */}
+                      <h3 className="font-heading font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                        {product.name}
+                      </h3>
+                      
+                      {/* Product Description */}
+                      <p className="text-neutral-600 text-sm h-12 overflow-hidden mb-3">
                         {product.description || "No description available"}
                       </p>
-                      <p className="font-bold text-lg mt-3 text-primary">
-                        KSh {parseFloat(product.price).toLocaleString()}
-                      </p>
+                      
+                      {/* Product Price */}
+                      <div className="flex justify-between items-center mt-4">
+                        <p className="font-bold text-lg text-primary">
+                          KSh {parseFloat(product.price).toLocaleString()}
+                        </p>
+                        
+                        <span className="text-xs text-neutral-500">
+                          {product.stock > 0 ? `${product.stock} in stock` : ''}
+                        </span>
+                      </div>
                     </CardContent>
+                    
                     <CardFooter className="pt-0">
                       <Button 
-                        className="w-full" 
+                        className="w-full group-hover:bg-primary/90 transition-colors" 
                         onClick={() => addToCart(product)}
                         disabled={product.stock <= 0}
                       >
-                        {product.stock <= 0 ? "Out of stock" : "Add to Cart"}
+                        {product.stock <= 0 ? "Out of stock" : (
+                          <span className="flex items-center justify-center">
+                            <ShoppingCart className="mr-2 h-4 w-4" />
+                            Add to Cart
+                          </span>
+                        )}
                       </Button>
                     </CardFooter>
                   </Card>
