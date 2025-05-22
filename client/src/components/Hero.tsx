@@ -5,10 +5,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative h-[85vh] flex items-center bg-cover bg-center"
+      className="relative h-screen flex items-center bg-cover bg-center"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1500076656116-558758c991c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')",
+          "url('https://yndufountain.co.ke/wp-content/uploads/2023/04/20221112_130917-scaled-1-2048x969.jpg')",
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>

@@ -30,19 +30,19 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <div className="text-primary font-heading font-bold text-xl">YNDU FOUNTAIN</div>
-            <span className="hidden md:inline-block text-sm font-medium text-neutral-500">|</span>
-            <div className="hidden md:inline-block text-sm font-medium text-neutral-500">Small Farms. Big Ideas.</div>
+            <div className="text-primary font-heading font-bold text-base sm:text-xl">YNDU FOUNTAIN</div>
+            <span className="hidden sm:inline-block text-xs sm:text-sm font-medium text-neutral-500">|</span>
+            <div className="hidden sm:inline-block text-xs sm:text-sm font-medium text-neutral-500">Small Farms. Big Ideas.</div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <a href="#home" className="font-medium text-neutral-700 hover:text-primary transition-colors">Home</a>
-            <a href="#about" className="font-medium text-neutral-700 hover:text-primary transition-colors">About</a>
-            <a href="#produce" className="font-medium text-neutral-700 hover:text-primary transition-colors">Our Produce</a>
-            <a href="#features" className="font-medium text-neutral-700 hover:text-primary transition-colors">Features</a>
-            <a href="#gallery" className="font-medium text-neutral-700 hover:text-primary transition-colors">Gallery</a>
-            <a href="#contact" className="font-medium text-neutral-700 hover:text-primary transition-colors">Contact</a>
+          <nav className="hidden md:flex space-x-4 lg:space-x-8">
+            <a href="#home" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Home</a>
+            <a href="#about" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">About</a>
+            <a href="#produce" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Our Produce</a>
+            <a href="#features" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Features</a>
+            <a href="#gallery" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Gallery</a>
+            <a href="#contact" className="font-medium text-neutral-700 hover:text-primary transition-colors text-sm lg:text-base">Contact</a>
           </nav>
 
           {/* Mobile Navigation Toggle */}
@@ -64,7 +64,7 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white shadow-lg"
+            className="md:hidden bg-white shadow-lg absolute w-full"
           >
             <div className="container mx-auto px-4 py-2">
               <nav className="flex flex-col space-y-3 py-3">

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/use-intersection-observer";
 import { useRef } from "react";
-import { Sun, Droplets, Sprout, Leaf, ShieldAlert } from "lucide-react";
+import { Sun, Droplets, Sprout, Leaf, ShieldAlert, Zap, Recycle, BatteryCharging } from "lucide-react";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -33,7 +33,11 @@ export default function FarmFeatures() {
 
   const features = [
     {
-      icon: <Sun className="text-primary h-8 w-8" />,
+      icon: <div className="flex items-center justify-center gap-1">
+              <Sun className="text-primary h-6 w-6" />
+              <Zap className="text-secondary h-5 w-5" />
+              <BatteryCharging className="text-primary h-5 w-5" />
+            </div>,
       title: "Solar Powered Systems",
       description: "Sustainable energy solutions for our farming operations",
       delay: 0.1,

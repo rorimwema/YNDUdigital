@@ -7,46 +7,46 @@ export default function Gallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true });
   
-  // Gallery images
+  // Gallery images - using actual images from yndufountain.co.ke
   const galleryImages: GalleryImage[] = [
     {
-      src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      alt: "Crop inspection at Yndu farm",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.03.01-AM-1.jpeg",
+      alt: "Farm operations at Yndu Fountain",
       id: 0,
     },
     {
-      src: "https://pixabay.com/get/geedcb0d9849bd612d5a038b627dc82cfa446264bf7b63286ac454ca3c830fa08c85bb32498d934dab5477d273c40d98386a769be2029ac4ea9cecdc52b26e38f_1280.jpg",
-      alt: "Technology in farming at Yndu",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.20-AM-1-1.jpeg",
+      alt: "Crop production at Yndu Fountain",
       id: 1,
     },
     {
-      src: "https://pixabay.com/get/ga2cf6afd3d66d40e1156a6df5914d5693c03a35c5ad9f554e3ad1c1fdc4c42440a4ed5e5792cc608b898c97cb605fedb5de44ffc72237ad6b7cc6d685ade6061_1280.jpg",
-      alt: "Harvesting at Yndu farm",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.24-AM-1-1.jpeg",
+      alt: "Sustainable farming at Yndu Fountain",
       id: 2,
     },
     {
-      src: "https://pixabay.com/get/gb1b5ff712ee6a8b41d32cbbe3015e10aaf0527fb56b2eca8039f8e6de8b9a27a0abf10dc7795599f2c9da24dcd16ff1d39eb91a7e8f940ecdb53a8c01af52d80_1280.jpg",
-      alt: "Solar powered irrigation",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.02.13-AM-1.jpeg",
+      alt: "Field operations at Yndu Fountain",
       id: 3,
     },
     {
-      src: "https://images.unsplash.com/photo-1520052203542-d3095f1b6cf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      alt: "Seedling preparation",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.25-AM-1-1-1.jpeg",
+      alt: "Crop variety at Yndu Fountain",
       id: 4,
     },
     {
-      src: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      alt: "Modern greenhouse",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.20-AM-2.jpeg",
+      alt: "Fresh produce at Yndu Fountain",
       id: 5,
     },
     {
-      src: "https://images.unsplash.com/photo-1566842600175-97dca489844f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      alt: "Vegetable rows at Yndu",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.25-AM-1-3.jpeg",
+      alt: "Farming techniques at Yndu Fountain",
       id: 6,
     },
     {
-      src: "https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      alt: "Crop inspection",
+      src: "https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.19-AM-2.jpeg",
+      alt: "Agricultural innovation at Yndu Fountain",
       id: 7,
     },
   ];

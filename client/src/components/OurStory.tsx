@@ -63,7 +63,7 @@ export default function OurStory() {
             animate={isInView ? "visible" : "hidden"}
           >
             <img
-              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&h=600"
+              src="https://yndufountain.co.ke/wp-content/uploads/2023/04/20221112_130917-scaled-1-2048x969.jpg"
               alt="Sustainable farming at Yndu Fountain"
               className="w-full h-auto rounded-xl shadow-2xl"
               loading="lazy"

@@ -24,7 +24,7 @@ export default function SustainableVision() {
       className="h-[60vh] relative flex items-center bg-cover bg-center parallax-bg py-16"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')",
+          "url('https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.25-AM-2.jpeg')",
       }}
     >
       <div className="absolute inset-0 bg-primary bg-opacity-70"></div>

@@ -55,7 +55,7 @@ export default function OurProduce() {
             {/* Fresh produce image */}
             <div className="rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
               <img 
-                src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600" 
+                src="https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.19-AM-2.jpeg" 
                 alt="Fresh produce from Yndu farm" 
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -65,7 +65,7 @@ export default function OurProduce() {
             {/* Organic vegetables image */}
             <div className="rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
               <img 
-                src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600" 
+                src="https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.25-AM-2.jpeg" 
                 alt="Organic vegetables from Yndu farm" 
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -75,7 +75,7 @@ export default function OurProduce() {
             {/* Green produce image */}
             <div className="rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 col-span-2 md:col-span-1">
               <img 
-                src="https://images.unsplash.com/photo-1470072768013-bf9532016c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600" 
+                src="https://yndufountain.co.ke/wp-content/uploads/2023/04/WhatsApp-Image-2023-04-10-at-11.44.20-AM-2.jpeg" 
                 alt="Green produce from Yndu farm" 
                 className="w-full h-full object-cover"
                 loading="lazy"
