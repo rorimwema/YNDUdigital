@@ -7,7 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Search, ShoppingCart, Tag, X } from "lucide-react";
+import { Loader2, Search, ShoppingCart, Tag, X, User } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SignupForm from "@/components/SignupForm";
 
 interface Product {
   id: number;
@@ -42,6 +45,7 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     deliveryAddress: "",
     contactPhone: "",
@@ -182,18 +186,31 @@ export default function Shop() {
   };
   
   return (
-    <div className="font-body bg-neutral-50 text-neutral-800 pb-16">
+    <div className="font-body bg-neutral-50 text-neutral-800">
+      {/* Header */}
+      <Header />
+      
       {/* Shop Header */}
-      <div className="bg-primary py-16 md:py-24">
+      <div className="bg-primary py-16 md:py-24 pt-28">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
             Farm Shop
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto mb-4">
             Shop our fresh, sustainable produce directly from our farm. 
             All items are grown using environmentally friendly practices.
             Payment on delivery.
           </p>
+          
+          {/* Create Account Button */}
+          <Button 
+            onClick={() => setIsSignupModalOpen(true)}
+            variant="secondary"
+            className="mt-2 flex items-center mx-auto"
+          >
+            <User size={18} className="mr-2" />
+            Create Account
+          </Button>
         </div>
       </div>
       
