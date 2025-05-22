@@ -491,6 +491,14 @@ export default function Shop() {
           </Card>
         </div>
       )}
+      
+      {/* Signup Modal */}
+      {isSignupModalOpen && (
+        <SignupForm onClose={() => setIsSignupModalOpen(false)} />
+      )}
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
