@@ -20,10 +20,11 @@ const authMiddleware = (req: any, res: Response, next: NextFunction) => {
 
 // Admin middleware to check if the user is an admin
 const adminMiddleware = async (req: any, res: Response, next: NextFunction) => {
-  if (!req.session?.userId) {
+  if (!req.session?.userId || !req.session?.isAdmin) {
     return res.status(401).json({ message: "Unauthorized" });
   }
   
+  // Double-check admin role in database for security
   const user = await storage.getUser(req.session.userId);
   if (!user || user.role !== "admin") {
     return res.status(403).json({ message: "Forbidden" });
@@ -165,6 +166,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Login error:", error);
+      return res.status(500).json({ message: "Server error" });
+    }
+  });
+  
+  // Admin login route
+  app.post("/api/auth/admin-login", async (req, res) => {
+    try {
+      const validation = loginSchema.safeParse(req.body);
+      
+      if (!validation.success) {
+        return res.status(400).json({ 
+          message: "Invalid login data", 
+          errors: validation.error.errors 
+        });
+      }
+
+      const { username, password } = validation.data;
+      
+      // Find the user
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        return res.status(401).json({ 
+          message: "Invalid username or password" 
+        });
+      }
+      
+      // Check if user is an admin
+      if (user.role !== "admin") {
+        return res.status(403).json({ 
+          message: "Access denied. Admin privileges required." 
+        });
+      }
+      
+      // Check password (in a real app, you'd verify the hashed password)
+      if (user.password !== password) {
+        return res.status(401).json({ 
+          message: "Invalid username or password" 
+        });
+      }
+      
+      // Set user session
+      (req as any).session.userId = user.id;
+      (req as any).session.isAdmin = true;
+      
+      return res.status(200).json({ 
+        success: true,
+        message: "Admin login successful", 
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        }
+      });
+    } catch (error) {
+      console.error("Admin login error:", error);
       return res.status(500).json({ message: "Server error" });
     }
   });

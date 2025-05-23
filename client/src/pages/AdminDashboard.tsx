@@ -12,7 +12,39 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Package, ShoppingBag, Users, Calendar, FileEdit, Trash2, PlusCircle } from "lucide-react";
+import { Loader2, Package, ShoppingBag, Users, Calendar, FileEdit, Trash2, PlusCircle, Clock, MapPin, Tag } from "lucide-react";
+
+// Event category options
+const EVENT_CATEGORIES = [
+  "farm-tour",
+  "workshop",
+  "market-day",
+  "community-event",
+  "special-sale",
+  "other"
+];
+
+// Event category badge component
+const EventCategoryBadge = ({ category }: { category: string }) => {
+  const categoryStyles: Record<string, string> = {
+    "farm-tour": "bg-green-100 text-green-800 border-green-200",
+    "workshop": "bg-blue-100 text-blue-800 border-blue-200",
+    "market-day": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "community-event": "bg-purple-100 text-purple-800 border-purple-200",
+    "special-sale": "bg-red-100 text-red-800 border-red-200",
+    "other": "bg-gray-100 text-gray-800 border-gray-200"
+  };
+  
+  const displayName = category.split('-').map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ');
+  
+  return (
+    <Badge className={`font-medium ${categoryStyles[category] || categoryStyles.other}`}>
+      {displayName}
+    </Badge>
+  );
+};
 
 // Order status badge component
 const StatusBadge = ({ status }: { status: string }) => {
@@ -38,6 +70,8 @@ export default function AdminDashboard() {
   const [productFormOpen, setProductFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [categoryFormOpen, setCategoryFormOpen] = useState(false);
+  const [eventFormOpen, setEventFormOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<any>(null);
   
   const { toast } = useToast();
   
@@ -54,6 +88,17 @@ export default function AdminDashboard() {
   const [categoryForm, setCategoryForm] = useState({
     name: "",
     description: ""
+  });
+  
+  const [eventForm, setEventForm] = useState({
+    title: "",
+    description: "",
+    eventDate: "",
+    startTime: "",
+    endTime: "",
+    location: "",
+    imageUrl: "",
+    category: "farm-tour"
   });
   
   // Set document title
@@ -96,6 +141,41 @@ export default function AdminDashboard() {
     }
   }, [categoryFormOpen]);
   
+  // Reset event form when opening
+  useEffect(() => {
+    if (eventFormOpen) {
+      if (editingEvent) {
+        // Format date for input field (YYYY-MM-DD)
+        const eventDate = new Date(editingEvent.eventDate);
+        const formattedDate = eventDate.toISOString().split('T')[0];
+        
+        setEventForm({
+          title: editingEvent.title,
+          description: editingEvent.description || "",
+          eventDate: formattedDate,
+          startTime: editingEvent.startTime,
+          endTime: editingEvent.endTime,
+          location: editingEvent.location,
+          imageUrl: editingEvent.imageUrl || "",
+          category: editingEvent.category
+        });
+      } else {
+        // Set default values for new event
+        const today = new Date().toISOString().split('T')[0];
+        setEventForm({
+          title: "",
+          description: "",
+          eventDate: today,
+          startTime: "09:00",
+          endTime: "17:00",
+          location: "Yndu Fountain Farms",
+          imageUrl: "",
+          category: "farm-tour"
+        });
+      }
+    }
+  }, [eventFormOpen, editingEvent]);
+  
   // Fetch all orders
   const { data: orders = [], isLoading: isLoadingOrders } = useQuery({
     queryKey: ['/api/admin/orders'],
@@ -112,6 +192,12 @@ export default function AdminDashboard() {
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
     queryKey: ['/api/categories'],
     staleTime: 300000, // 5 minutes
+  });
+  
+  // Fetch all events
+  const { data: events = [], isLoading: isLoadingEvents } = useQuery({
+    queryKey: ['/api/events'],
+    staleTime: 60000, // 1 minute
   });
   
   // Order status update mutation

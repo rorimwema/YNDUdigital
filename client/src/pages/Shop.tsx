@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Search, ShoppingCart, Tag, X, User } from "lucide-react";
+import { Filter, Loader2, Search, ShoppingCart, Tag, X, User } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
@@ -46,6 +46,7 @@ export default function Shop() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [formData, setFormData] = useState({
     deliveryAddress: "",
     contactPhone: "",
@@ -60,8 +61,15 @@ export default function Shop() {
     staleTime: 60000, // 1 minute
   });
   
+  // Define Category type
+  interface Category {
+    id: number;
+    name: string;
+    description?: string;
+  }
+  
   // Fetch all categories
-  const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
+  const { data: categories = [], isLoading: isLoadingCategories } = useQuery<Category[]>({
     queryKey: ['/api/categories'],
     staleTime: 300000, // 5 minutes
   });
@@ -222,52 +230,69 @@ export default function Shop() {
             Payment on delivery.
           </p>
           
-          {/* Create Account Button - Improved positioning and styling */}
-          <Button 
-            onClick={() => setIsSignupModalOpen(true)}
-            variant="secondary"
-            className="mt-4 flex items-center mx-auto hover:bg-white/90 transition-colors"
-          >
-            <User size={18} className="mr-2" />
-            Create Account
-          </Button>
+          {/* Removed Create Account Button */}
         </div>
       </div>
       
       <div className="container mx-auto px-4 py-8">
+        {/* Mobile Filter Toggle */}
+        <div className="lg:hidden mb-4">
+          <Button 
+            variant="outline" 
+            className="w-full flex items-center justify-center" 
+            onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+          >
+            <Filter className="mr-2 h-4 w-4" />
+            {isMobileFiltersOpen ? 'Hide Filters & Cart' : 'Show Filters & Cart'}
+          </Button>
+        </div>
+        
+        {/* Floating Cart Button for Mobile */}
+        {cart.length > 0 && (
+          <div className="fixed bottom-4 right-4 z-50 lg:hidden">
+            <Button 
+              className="rounded-full h-14 w-14 shadow-lg flex flex-col items-center justify-center p-0" 
+              onClick={() => setIsMobileFiltersOpen(true)}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              <span className="text-xs mt-1">{cart.length}</span>
+            </Button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Sidebar with filters and cart */}
-          <div className="lg:col-span-3">
-            <div className="sticky top-24">
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold flex items-center">
+          {/* Sidebar with filters and cart - Mobile First */}
+          <div className={`lg:col-span-3 ${isMobileFiltersOpen ? 'block' : 'hidden'} lg:block`}>
+            <div className="lg:sticky top-24 space-y-6">
+              <Card className="mb-6 shadow-sm border-0 rounded-xl overflow-hidden">
+                <CardHeader className="bg-primary/5 pb-3">
+                  <CardTitle className="text-lg font-semibold flex items-center text-primary">
                     <Search className="w-4 h-4 mr-2" />
                     Search Products
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   <Input
                     type="text"
                     placeholder="Search by name..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full"
+                    className="w-full focus-visible:ring-primary"
                   />
                 </CardContent>
               </Card>
               
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold flex items-center">
+              <Card className="mb-6 shadow-sm border-0 rounded-xl overflow-hidden">
+                <CardHeader className="bg-primary/5 pb-3">
+                  <CardTitle className="text-lg font-semibold flex items-center text-primary">
                     <Tag className="w-4 h-4 mr-2" />
                     Categories
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   <div className="space-y-2">
                     <div 
-                      className={`cursor-pointer hover:text-primary transition-colors py-1 px-2 rounded ${selectedCategory === null ? 'bg-primary/10 text-primary font-medium' : ''}`}
+                      className={`cursor-pointer hover:text-primary transition-colors py-2 px-3 rounded-md ${selectedCategory === null ? 'bg-primary text-white font-medium' : 'bg-neutral-100'}`}
                       onClick={() => setSelectedCategory(null)}
                     >
                       All Products
@@ -277,10 +302,10 @@ export default function Shop() {
                         <Loader2 className="w-6 h-6 animate-spin text-primary" />
                       </div>
                     ) : (
-                      categories.map((category: any) => (
+                      categories.map((category) => (
                         <div 
                           key={category.id}
-                          className={`cursor-pointer hover:text-primary transition-colors py-1 px-2 rounded ${selectedCategory === category.id ? 'bg-primary/10 text-primary font-medium' : ''}`}
+                          className={`cursor-pointer hover:text-primary transition-colors py-2 px-3 rounded-md ${selectedCategory === category.id ? 'bg-primary text-white font-medium' : 'bg-neutral-100'}`}
                           onClick={() => setSelectedCategory(category.id)}
                         >
                           {category.name}
@@ -291,67 +316,73 @@ export default function Shop() {
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-semibold flex items-center">
+              <Card className="shadow-sm border-0 rounded-xl overflow-hidden">
+                <CardHeader className="bg-primary/5 pb-3">
+                  <CardTitle className="text-lg font-semibold flex items-center text-primary">
                     <ShoppingCart className="w-4 h-4 mr-2" />
                     Your Cart
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   {cart.length === 0 ? (
-                    <p className="text-sm text-neutral-500 text-center py-4">
-                      Your cart is empty
-                    </p>
+                    <div className="text-center py-6">
+                      <ShoppingCart className="w-12 h-12 text-neutral-300 mx-auto mb-3" />
+                      <p className="text-neutral-500">
+                        Your cart is empty
+                      </p>
+                      <p className="text-xs text-neutral-400 mt-1">
+                        Add items from the product list
+                      </p>
+                    </div>
                   ) : (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {cart.map((item) => (
-                        <div key={item.product.id} className="flex justify-between items-center pb-2 border-b border-neutral-200">
-                          <div>
+                        <div key={item.product.id} className="flex justify-between items-start pb-3 border-b border-neutral-200 last:border-0">
+                          <div className="flex-1 pr-2">
                             <p className="font-medium text-sm">{item.product.name}</p>
-                            <div className="flex items-center mt-1">
+                            <div className="flex items-center mt-2 bg-neutral-100 rounded-md inline-flex">
                               <button 
                                 onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                                className="bg-neutral-100 hover:bg-neutral-200 w-5 h-5 flex items-center justify-center rounded"
+                                className="w-7 h-7 flex items-center justify-center rounded-l-md hover:bg-neutral-200 transition-colors"
                                 disabled={item.quantity <= 1}
                               >
-                                -
+                                <span className="font-medium">-</span>
                               </button>
-                              <span className="mx-2 text-sm">{item.quantity}</span>
+                              <span className="mx-2 text-sm font-medium">{item.quantity}</span>
                               <button 
                                 onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                                className="bg-neutral-100 hover:bg-neutral-200 w-5 h-5 flex items-center justify-center rounded"
+                                className="w-7 h-7 flex items-center justify-center rounded-r-md hover:bg-neutral-200 transition-colors"
                               >
-                                +
+                                <span className="font-medium">+</span>
                               </button>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold text-sm">
+                            <p className="font-semibold text-sm text-primary">
                               KSh {(parseFloat(item.product.price) * item.quantity).toLocaleString()}
                             </p>
                             <button 
                               onClick={() => removeFromCart(item.product.id)}
-                              className="text-red-500 hover:text-red-700 text-sm mt-1"
+                              className="text-red-500 hover:text-red-700 text-xs mt-2 flex items-center justify-end ml-auto"
                             >
-                              Remove
+                              <X className="w-3 h-3 mr-1" /> Remove
                             </button>
                           </div>
                         </div>
                       ))}
                       
-                      <div className="pt-3">
+                      <div className="pt-3 bg-neutral-50 p-3 rounded-lg mt-4">
                         <div className="flex justify-between font-semibold">
                           <span>Total:</span>
-                          <span>KSh {calculateTotal().toLocaleString()}</span>
+                          <span className="text-primary">KSh {calculateTotal().toLocaleString()}</span>
                         </div>
                         
                         <Button 
-                          className="w-full mt-4" 
+                          className="w-full mt-4 py-5 font-medium text-base" 
                           onClick={() => setCheckoutModalOpen(true)}
                           disabled={cart.length === 0}
                         >
-                          Checkout
+                          Proceed to Checkout
                         </Button>
                       </div>
                     </div>
@@ -402,7 +433,7 @@ export default function Shop() {
                       {/* Category Badge - Shows only if product has a category */}
                       {product.categoryId && Array.isArray(categories) && (
                         <div className="absolute bottom-2 left-2">
-                          {categories.map((category: any) => (
+                          {categories.map((category) => (
                             category.id === product.categoryId && (
                               <span key={category.id} className="bg-primary/80 text-white text-xs px-2 py-1 rounded-full">
                                 {category.name}

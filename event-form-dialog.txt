@@ -1,0 +1,147 @@
+{/* Event Form Dialog */}
+<Dialog open={eventFormOpen} onOpenChange={setEventFormOpen}>
+  <DialogContent className="max-w-lg">
+    <DialogHeader>
+      <DialogTitle>{editingEvent ? "Edit Event" : "Add New Event"}</DialogTitle>
+    </DialogHeader>
+    
+    <form onSubmit={handleEventSubmit}>
+      <div className="space-y-4 my-4">
+        <div>
+          <Label htmlFor="title">Event Title *</Label>
+          <Input 
+            id="title"
+            name="title"
+            value={eventForm.title}
+            onChange={handleEventInputChange}
+            required
+            className="mt-1"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="description">Description</Label>
+          <Textarea 
+            id="description"
+            name="description"
+            value={eventForm.description}
+            onChange={handleEventInputChange}
+            className="mt-1"
+            rows={3}
+          />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="eventDate">Date *</Label>
+            <Input 
+              id="eventDate"
+              name="eventDate"
+              type="date"
+              value={eventForm.eventDate}
+              onChange={handleEventInputChange}
+              required
+              className="mt-1"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="category">Category *</Label>
+            <Select 
+              value={eventForm.category} 
+              onValueChange={handleEventCategoryChange}
+            >
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {EVENT_CATEGORIES.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category.split('-').map(word => 
+                      word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ')}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="startTime">Start Time *</Label>
+            <Input 
+              id="startTime"
+              name="startTime"
+              type="time"
+              value={eventForm.startTime}
+              onChange={handleEventInputChange}
+              required
+              className="mt-1"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="endTime">End Time *</Label>
+            <Input 
+              id="endTime"
+              name="endTime"
+              type="time"
+              value={eventForm.endTime}
+              onChange={handleEventInputChange}
+              required
+              className="mt-1"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="location">Location *</Label>
+          <Input 
+            id="location"
+            name="location"
+            value={eventForm.location}
+            onChange={handleEventInputChange}
+            required
+            className="mt-1"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="imageUrl">Image URL</Label>
+          <Input 
+            id="imageUrl"
+            name="imageUrl"
+            value={eventForm.imageUrl}
+            onChange={handleEventInputChange}
+            placeholder="https://example.com/image.jpg"
+            className="mt-1"
+          />
+        </div>
+      </div>
+      
+      <DialogFooter>
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => setEventFormOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button 
+          type="submit"
+          disabled={eventMutation.isPending}
+        >
+          {eventMutation.isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            "Save Event"
+          )}
+        </Button>
+      </DialogFooter>
+    </form>
+  </DialogContent>
+</Dialog>
